@@ -1,0 +1,32 @@
+@startuml
+
+note right of Subject::Scan : Cashier system, the article scan.
+
+package Subject::Scan {
+}
+
+Observator::Bill <|.. Subject::Scan : A article has been scanned.
+
+note right of Observator::Bill : Bill screen.
+
+package Observator::Bill {
+}
+
+
+
+
+note right of Subject::CreditCardPaymentDialog : Cashier dialog for credit card payment.
+
+package Subject::CreditCardPaymentDialog {
+}
+
+Observator::PaymentTerminal <|.. Subject::CreditCardPaymentDialog : Update payment status from the mobile payment terminal.
+
+note right of Observator::PaymentTerminal : Mobile payment terminal.
+
+package Observator::PaymentTerminal {
+}
+
+
+
+@enduml

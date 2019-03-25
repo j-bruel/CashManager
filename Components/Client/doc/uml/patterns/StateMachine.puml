@@ -1,0 +1,26 @@
+@startuml
+
+User ()- CardPayment
+
+package CardPayment {
+}
+
+Start <|.. CardPayment: Launch payment with credit card.
+
+package Start {
+}
+
+Cashier <|.. Start: Update the payment state.
+
+package Cashier {
+}
+
+Stop <|.. Cashier: Payment finish.
+Stop <|.. Start: Payment finish.
+
+package Stop {
+}
+
+CardPayment <|.. Stop
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+
+note top of UserRequest : A simple user request like scanning a article.
+
+package UserRequest {
+}
+
+note top of Cashier : Only cashier functionnalities = Controller
+
+package Cashier {
+}
+
+note top of View : 3 screens (cashier, card controller, build) = View
+
+package View {
+}
+
+note top of DataBase : Database contain all articles informations = Model
+
+package DataBase {
+}
+
+Cashier <|-- DataBase : Data read on the data base.
+
+DataBase <|-- Cashier : Asking dataDemande de données
+
+View <|-- Cashier : Asking for view update.
+
+UserRequest <|-- View : Update the view for the user.
+
+Cashier <|-- UserRequest : User request (scanning a article for exemple).
+
+@enduml

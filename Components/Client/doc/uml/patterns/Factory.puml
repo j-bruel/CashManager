@@ -1,0 +1,30 @@
+@startuml
+
+class RequestFactory {
+    __
+    +ARequest *build_request(RequestType)
+}
+
+class NetworkAPI {
+}
+
+class ARequest {
+}
+
+class AuthenticateRequest {
+}
+
+class CardPaymentRequest {
+}
+
+class CheckPaymentRequest {
+}
+
+AuthenticateRequest ..|> ARequest
+CardPaymentRequest ..|> ARequest
+CheckPaymentRequest ..|> ARequest
+RequestFactory ..> ARequest
+RequestFactory ..o NetworkAPI
+ARequest ..o NetworkAPI
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+
+namespace cash {
+        namespace network {
+            class NetworkAPI {
+                -_url : string
+                -_port : unsigned int
+                -_request : list<ARequest>
+                __
+                +string url()
+                +unsigned int port()
+                +void get(ARequest)
+            }
+
+            class BankAPI {
+                +ARequest *authenticate(string, int, unsigned int)
+                +ARequest *card_payment(string, string, string, float, unsigned int)
+                +ARequest *card_payment_contactless(string, string, string, float, unsigned int)
+                +ARequest *check_payment(string, string, float, unsigned int)
+            }
+
+            class WarehouseAPI {
+                +ARequest *articles()
+                +ARequest *scan(string, string)
+            }
+
+            NetworkAPI <|-- BankAPI
+            NetworkAPI <|-- WarehouseAPI
+       }
+}
+
+@enduml

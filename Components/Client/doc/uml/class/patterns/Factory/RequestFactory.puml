@@ -1,0 +1,146 @@
+@startuml
+
+namespace cash {
+    namespace network {
+                class ARequest {
+                    -_errcode : unsigned int
+                    -_error : string
+                    -_path : string
+                    -_parameters : RequestParameters
+                    -_status : RequestStatus
+                    __
+                    +const string path()
+                    +RequestParameters parameters()
+                    +RequestStatus status()
+                    +void set_parameter(string, string)
+                    +void set_status(RequestStatus)
+                    +void set_error(string, unsigned int)
+                    +string error_msg()
+                    +RequestAPIErrors error_code()
+                    ..
+                    -bool deserialize(std::shared_ptr<QJsonDocument>)
+                    +void onResult(QNetworkReply)
+                    +void wait()
+                    +void wait_until(unsigned int)
+                    +void reset()
+                }
+
+                class   RequestFactory {
+                    -_requests : function<ARequest*()> []
+                    __
+                    +ARequest *build_request(RequestID)
+                }
+
+                class Article {
+                    -_id : int
+                    -_name : string
+                    -_price : double
+                    -_stock_size : int
+                    __
+                    +Article(QJsonObject)
+                    +int id()
+                    +string name()
+                    +double price()
+                    +int stock_size()
+                }
+
+                class ArticleList {
+                    -_articles : list<Article>
+                    __
+                    -void deserialized(BankCheck *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +list<Article> articles()
+                }
+
+                class ArticleScan {
+                    -_article : Article
+                    __
+                    -void deserialized(BankCheck *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +Article *article()
+                }
+
+                class Authenticate {
+                    -_token : string
+                    -_type : string
+                    -_created : time_t
+                    -_expire : time_t
+                    __
+                    -void deserialized(BankCheck *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +string token()
+                    +string type()
+                    +time_t created()
+                    +time_t expire()
+                }
+
+                class BankCheck {
+                    -_token : string
+                    -_type : string
+                    -_check_number : string
+                    -_transaction : string
+                    -_amount : int
+                    __
+                    -void deserialized(BankCheck *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +string token()
+                    +string type()
+                    +string number()
+                    +string transaction_id()
+                    +int amount()
+
+                }
+
+                class CardPayment {
+                    -_token : string
+                    -_type : string
+                    -_card_type : string
+                    -_card_number : string
+                    -_transaction : string
+                    -_amount : int
+                    __
+                    -void deserialized(CardPayment *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +string token()
+                    +string type()
+                    +string card_type()
+                    +string card_number()
+                    +string transaction_id()
+                    +int amount()
+                }
+
+                class CardPaymentContactless {
+                    -_token : string
+                    -_type : string
+                    -_card_type : string
+                    -_card_number : string
+                    -_transaction : string
+                    -_amount : int
+                    __
+                    -void deserialized(CardPayment *)
+                    -bool deserialise(std::shared_ptr<QJsonDocument>)
+                    ..
+                    +string token()
+                    +string type()
+                    +string card_type()
+                    +string card_number()
+                    +string transaction_id()
+                    +int amount()
+                }
+
+                ARequest <|.. ArticleList
+                ARequest <|.. ArticleScan
+                ARequest <|.. Authenticate
+                ARequest <|.. BankCheck
+                ARequest <|.. CardPayment
+                ARequest <|.. CardPaymentContactless
+        }
+}
+
+
+@enduml

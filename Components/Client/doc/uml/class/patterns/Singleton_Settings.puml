@@ -1,0 +1,35 @@
+@startuml
+
+namespace cash {
+
+    namespace tool {
+
+        abstract   Singleton {
+            ~mInstance : {static} T
+            __
+            +{static} T   &Instance()
+            ..
+            -T   &operator=(T)
+        }
+
+    }
+
+    namespace conf {
+
+        cash.tool.Singleton <|.. Settings
+
+        class Settings {
+            +mAttempts : size_t
+            +mIsUnlimitedAttempts : bool
+            +mDelay : size_t
+            __
+            +void    setConnexionsSettings(size_t, size_t)
+            +void    setCnnexionsSettings(size_t)
+        }
+
+
+    }
+
+}
+
+@enduml

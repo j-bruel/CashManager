@@ -1,0 +1,64 @@
+@startuml
+
+namespace cash {
+
+    namespace tool {
+
+        class Observer <T> {
+            +Observer()
+            +Observer(Observer)
+            +Observer    operator=(Observer)
+            +~Observer()
+            __
+            +void   update(T)
+        }
+
+        class   Subject <T> {
+            -mObservers : vector<Observer<T> *>
+            -mMutex : mutex
+            __
+            +Subject()
+            +Subject(Subject)
+            +Subject &operator=(Subject &)
+            +~Subject()
+            ..
+            +void   attach(Observer<T>)
+             +void   notify()
+        }
+
+    }
+
+    namespace win {
+
+        namespace cashier {
+
+            namespace dialog {
+
+                cash.tool.Observer <|.. CreditCardDialog
+
+                class   CreditCardDialog {
+                    +void   update(shared_pr<PaymentUpdate>)
+                }
+
+            }
+
+        }
+
+        namespace term {
+
+            namespace widget {
+
+                cash.tool.Subject <|.. CodePinHandler
+
+                class CodePinHandler {
+                    +void    notifyCashierUpdate(PaymentStatus, string)
+                }
+            }
+
+        }
+
+    }
+
+}
+
+@enduml

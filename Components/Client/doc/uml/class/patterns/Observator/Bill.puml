@@ -1,0 +1,60 @@
+@startuml
+
+namespace cash {
+
+    namespace tool {
+
+        class Observer <T> {
+            +Observer()
+            +Observer(Observer)
+            +Observer    operator=(Observer)
+            +~Observer()
+            __
+            +void   update(T)
+        }
+
+        class   Subject <T> {
+            -mObservers : vector<Observer<T> *>
+            -mMutex : mutex
+            __
+            +Subject()
+            +Subject(Subject)
+            +Subject &operator=(Subject &)
+            +~Subject()
+            ..
+            +void   attach(Observer<T>)
+             +void   notify()
+        }
+
+    }
+
+    namespace win {
+
+        cash.tool.Observer <|.. Bill
+
+        namespace cashier {
+
+            namespace widget {
+
+                cash.tool.Subject <|.. Cashier
+
+                class   Cashier {
+                    +scanArticle()
+                    ..
+                    +void   attach(Observer<double>)
+                    +void   notify()
+                }
+
+            }
+
+        }
+
+        class   Bill {
+            +void   update(shared_pr<double>)
+        }
+
+    }
+
+}
+
+@enduml

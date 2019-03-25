@@ -1,0 +1,56 @@
+@startuml
+
+namespace cash {
+
+    namespace win {
+
+        namespace cashier {
+
+            class   Cashier {
+            }
+
+            namespace widget {
+
+                cash.win.cashier.Cashier <|.. cash.win.cashier.widget.CashierScreen
+                cash.win.cashier.Cashier <|.. cash.win.cashier.widget.Buttons
+
+                class   CashierScreen {
+                }
+
+                class   Buttons {
+                }
+
+                Buttons <|.. Scan
+                Buttons <|.. RemoveAll
+                Buttons <|.. Settings
+                Buttons <|.. Cash
+                Buttons <|.. Card
+                Buttons <|.. Cheque
+
+                class   Scan {
+                }
+
+                class   RemoveAll {
+                }
+
+                class   Settings {
+                }
+
+                class   Cash {
+                }
+
+                class   Card {
+                }
+
+                class   Cheque {
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@enduml

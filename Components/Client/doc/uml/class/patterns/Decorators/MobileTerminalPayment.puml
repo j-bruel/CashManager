@@ -1,0 +1,64 @@
+@startuml
+
+namespace cash {
+
+    namespace win {
+
+        class   PaymentTerminal {
+        }
+
+        namespace term {
+
+            namespace widget {
+
+                cash.win.PaymentTerminal <|.. cash.win.term.widget.PaymentTerminalScreen
+                cash.win.PaymentTerminal <|.. cash.win.term.widget.PaymentInterface
+
+                class   PaymentTerminalScreen {
+                }
+
+                class   PaymentInterface {
+                }
+
+                PaymentInterface <|.. CodePinHandler
+                PaymentInterface <|.. ContactLess
+
+                class   CodePinHandler {
+                }
+
+                class   ContactLess {
+                }
+
+                CodePinHandler <|.. ButtonOne
+                CodePinHandler <|.. ButtonTwo
+                CodePinHandler <|.. ButtonTree
+                CodePinHandler <|.. ButtonValidate
+                CodePinHandler <|.. ButtonCancel
+                CodePinHandler <|.. ButtonCorrect
+
+                class   ButtonOne {
+                }
+
+                class   ButtonTwo {
+                }
+
+                class   ButtonTree {
+                }
+
+                class   ButtonValidate {
+                }
+
+                class   ButtonCancel {
+                }
+
+                class   ButtonCorrect {
+                }
+            }
+
+        }
+
+    }
+
+}
+
+@enduml

@@ -1,0 +1,224 @@
+@startuml
+
+class   QWidget {
+}
+
+class   std::exception {
+}
+
+namespace cash {
+
+    .std::exception <|.. cash.exception
+
+    abstract    exception {
+    }
+
+    namespace exceptions {
+
+        cash.exception <|.. cash.exceptions.conf
+        cash.exception <|.. cash.exceptions.core
+
+        class   conf {
+        }
+
+        class   core {
+        }
+
+    }
+
+    namespace tool {
+
+        abstract   Singleton {
+            ~mInstance : {static} T
+            __
+            +{static} T   &Instance()
+            ..
+            -T   &operator=(T)
+        }
+
+        class Observer <T> {
+            +Observer()
+            +Observer(Observer)
+            +Observer    operator=(Observer)
+            +~Observer()
+            __
+            +void   update(T)
+        }
+
+        class   Subject <T> {
+            -mObservers : vector<Observer<T> *>
+            -mMutex : mutex
+            __
+            +Subject()
+            +Subject(Subject)
+            +Subject &operator=(Subject &)
+            +~Subject()
+            ..
+            +void   attach(Observer<T>)
+             +void   notify()
+        }
+
+    }
+
+    namespace conf {
+
+        cash.tool.Singleton <|.. cash.conf.ConnexionsSettings
+
+        class   ConnexionsSettings {
+        }
+
+    }
+
+    namespace win {
+
+        .QWidget <|.. Bill
+        cash.tool.Observer <|.. Bill
+
+        class   Bill {
+        }
+
+        namespace bill {
+
+            namespace widget {
+
+                .QWidget <|.. LCDBill
+
+                class   LCDBill {
+                }
+
+            }
+
+        }
+
+        .QWidget <|.. Cashier
+
+        class   Cashier {
+        }
+
+        namespace cashier {
+
+            namespace widget {
+
+                .QWidget <|.. CashierScreen
+                cash.tool.Subject <|.. CashierScreen
+
+                class   CashierScreen {
+                }
+
+            }
+
+            namespace dialog {
+
+                .QWidget <|.. CashMountNumberHandler
+                .QWidget <|.. CashPaymentDialog
+                .QWidget <|.. ChequePaymentDialog
+                .QWidget <|.. CreditCardDialog
+                .QWidget <|.. SettingDialog
+                cash.tool.Observer <|.. CreditCardDialog
+
+                class   CashMountNumberHandler {
+                }
+
+                class   CashPaymentDialog {
+                }
+
+                class   ChequePaymentDialog {
+                }
+
+                class   CreditCardDialog {
+                }
+
+                class   SettingDialog {
+                }
+
+            }
+
+        }
+
+        cash.tool.Observer <|.. PaymentTerminal
+        .QWidget <|.. PaymentTerminal
+
+        class   PaymentTerminal {
+        }
+
+        namespace term {
+
+            namespace widget {
+
+                .QWidget <|.. CodePinHandler
+                .QWidget <|.. ContactLess
+                .QWidget <|.. PaymentTerminalScreen
+                cash.tool.Subject <|.. CodePinHandler
+
+                class   CodePinHandler {
+                }
+
+                class   ContactLess {
+                }
+
+                class   PaymentTerminalScreen {
+                }
+
+            }
+
+        }
+
+    }
+
+    namespace core {
+
+        class   ArticleGenerator {
+        }
+
+        class   CashManager {
+        }
+
+        class   ChequeInfoGenerator {
+        }
+
+        enum    PaymentType {
+            CARD
+            CHEQUE
+            CASH
+            NONE
+        }
+
+        class   PaymentOrder {
+        }
+
+        enum    PaymentStatus {
+            PAYMENT_TYPE_CONNECTION_WAITING
+            PAYMENT_TYPE_CONNECTION_DONE
+            PAYMENT_TYPE_CONNECTION_FAIL
+            CREDIT_CARD_INSERT
+            CREDIT_CARD_TAKE_OFF
+            CREDIT_CARD_RIPPED_OFF
+            PAYMENT_SERVER_CONNECTION_WAITING
+            PAYMENT_SERVER_CONNECTION_DONE
+            PAYMENT_SERVER_CONNECTION_FAIL
+            PAYMENT_SERVER_CONNECTION_RETRY
+            MPT_WAITING_CODE
+            MPT_ENTER_CODE
+            MPT_CANCEL_PAYMENT
+            MPT_REMOVE_CODE
+            MPT_VALID_CODE
+            PAYMENT_SERVER_CHECK_CODE_WAITING
+            PAYMENT_SERVER_CHECK_CODE_DONE
+            PAYMENT_SERVER_CHECK_CODE_FAIL
+            PAYMENT_SERVER_AUTH_PENDING
+            PAYMENT_SERVER_AUTH_DONE
+            PAYMENT_SERVER_AUTH_FAIL
+            PAYMENT_REFUSE
+            PAYMENT_VALID
+            PAYMENT_BANK_REFUSE
+            USER_MUST_REMOVE_CREDIT_CARD
+            PROCESS_PAYMENT_FINISH
+        }
+
+        class   PaymentUpdate {
+        }
+
+    }
+
+}
+@enduml

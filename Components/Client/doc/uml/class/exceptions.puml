@@ -1,0 +1,32 @@
+@startuml
+
+
+namespace cash {
+
+    .std::exception <|.. exception
+
+    interface exception {
+        -mMsg : string
+        __
+        +exception(string)
+        ..
+        +char   *what()
+    }
+
+    namespace exceptions {
+
+        cash.exception <|.. core
+        cash.exception <|.. conf
+
+        class   core {
+            +core(string)
+        }
+
+        class   conf {
+            +conf(string)
+        }
+
+    }
+
+}
+@enduml

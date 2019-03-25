@@ -1,0 +1,26 @@
+version: '3'
+services:
+  bank:
+    build: ./server_bank
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./server_bank/server_bank:/server_bank/server_bank
+    depends_on:
+     - postgres
+  warehouse:
+    build: ./server_warehouse
+    ports:
+     - "5010:5000"
+    volumes:
+     - ./server_warehouse/server_warehouse:/server_warehouse/server_warehouse
+    depends_on:
+     - postgres
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_USER: cashmanager
+      POSTGRES_PASSWORD: cashmanager
+      POSTGRES_DB: cashmanager
+    expose:
+      - 5432
